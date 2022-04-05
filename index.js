@@ -3,6 +3,7 @@ const app = express()
 const http = require("http").Server(app)
 const path = require("path")
 const io = require("socket.io")(http)
+const cors = require("cors")
 
 const uri = process.env.MONGODB_URI
 const port = process.env.PORT || 5000
@@ -14,7 +15,7 @@ mongoose.connect(uri, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
 })
-
+app.use(cors()) // to run 2 development servers ( client and Backend)
 app.use(express.static(path.join(__dirname, "client", "build")))
 
 io.on("connection", (socket) => {
