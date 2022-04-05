@@ -4,6 +4,7 @@ const http = require("http").Server(app)
 const path = require("path")
 const io = require("socket.io")(http)
 const cors = require("cors")
+require("dotenv").config()
 
 const uri = process.env.MONGODB_URI
 const port = process.env.PORT || 5000
