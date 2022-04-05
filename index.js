@@ -15,7 +15,7 @@ mongoose.connect(uri, {
   useNewUrlParser: true,
 })
 
-app.use(express.static(path.join(__dirname, "..", "client", "build")))
+app.use(express.static(path.join(__dirname, "client", "build")))
 
 io.on("connection", (socket) => {
   // Get the last 10 messages from the database.
@@ -45,6 +45,11 @@ io.on("connection", (socket) => {
     // Notify all other users about a new message.
     socket.broadcast.emit("push", msg)
   })
+})
+
+// Right before your app.listen(), add this:
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"))
 })
 
 http.listen(port, () => {
